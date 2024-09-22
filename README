@@ -1,0 +1,38 @@
+#Build the spring boot jar file by running the following command in the root of the project
+
+mvn clean package
+
+#Build the docker image, once you have your jar file built. Run the following comand at the root of 
+#the project where the Docker file is located
+
+docker build -t fetch_picture .
+
+#Run the docker container
+
+docker run -p 8080:8080 fetch_picture
+
+#this application uses the H2 memory database. You can access the H2-console using localhost:8080/h2-console
+username: sa
+password:password
+
+#You can access the application using Postman or curl
+
+#These are the apis. To save images of an animal based on the type and the number of pictures
+#Run the following api by replacing {type} with the type of animal and {numberOfImages} 
+#With the number of images
+#POST localhost:8080/api/animalpictures/{type}/{numberOfImages}
+  
+  #EXAMPLES:
+   
+   #To save 2 images of dog
+
+    POST localhost:8080/api/animalpictures/dog/2
+
+   #Save 3 images of cat
+
+    POST localhost:8080/api/animalpictures/cat/3
+
+   #Retrieve the last image saved of a bear
+
+    localhost:8080/api/animalpictures/bear/last
+
