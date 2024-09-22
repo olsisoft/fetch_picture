@@ -1,38 +1,96 @@
-#Build the spring boot jar file by running the following command in the root of the project
+# Fetch Animal Pictures API
 
+## Description
+
+This Spring Boot application allows users to fetch and store images of animals based on the specified type and number of pictures. The application uses an H2 memory database to store image metadata and is accessible via a simple REST API. It can be packaged and deployed in a Docker container.
+
+## Prerequisites
+
+- Java 17
+- Maven
+- Docker
+
+## Getting Started
+
+### Build the Spring Boot JAR file
+
+In the root of the project directory, run the following command to build the Spring Boot JAR file:
+```bash
 mvn clean package
+```
 
-#Build the docker image, once you have your jar file built. Run the following comand at the root of 
-#the project where the Docker file is located
+### Build the Docker Image
+Once the JAR file is built, you can create the Docker image by running the following command in the project directory (where the Dockerfile is located):
 
+```bash
 docker build -t fetch_picture .
+```
 
-#Run the docker container
+### Run the Docker Container
+After building the Docker image, run the container using this command:
 
+```bash
 docker run -p 8080:8080 fetch_picture
+```
 
-#this application uses the H2 memory database. You can access the H2-console using localhost:8080/h2-console
-username: sa
-password:password
+## Access the Application
+### H2 Database Console
+This application uses an in-memory H2 database. You can access the H2 database console through a web browser at the following address:
 
-#You can access the application using Postman or curl
+```bash
+http://localhost:8080/h2-console
+```
 
-#These are the apis. To save images of an animal based on the type and the number of pictures
-#Run the following api by replacing {type} with the type of animal and {numberOfImages} 
-#With the number of images
-#POST localhost:8080/api/animalpictures/{type}/{numberOfImages}
-  
-  #EXAMPLES:
-   
-   #To save 2 images of dog
+- JDBC URL: jdbc:h2:mem:testdb
+* Username: sa
++ Password: password
 
-    POST localhost:8080/api/animalpictures/dog/2
+### REST API Usage
+You can use tools like Postman or curl to interact with the REST API.
 
-   #Save 3 images of cat
+### Save Animal Images
+To save images of an animal based on its type and the number of images, use the following API:
 
-    POST localhost:8080/api/animalpictures/cat/3
+```bash
+POST http://localhost:8080/api/animalpictures/{type}/{numberOfImages}
+```
 
-   #Retrieve the last image saved of a bear
+- {type}: The type of animal (e.g., dog, cat, bear)
+* {numberOfImages}: The number of images to save
 
-    localhost:8080/api/animalpictures/bear/last
+## Examples
+### Save 2 images of a dog:
+
+```bash
+POST http://localhost:8080/api/animalpictures/dog/2
+
+### Save 3 images of a cat:
+
+POST http://localhost:8080/api/animalpictures/cat/3
+
+### Retrieve the Last Saved Image of an Animal
+To retrieve the last saved image of an animal, use this API:
+
+GET http://localhost:8080/api/animalpictures/{type}/last
+
+{type}: The type of animal (e.g., dog, cat, bear)
+
+### Example: Retrieve the last saved image of a bear:
+
+GET http://localhost:8080/api/animalpictures/bear/last
+```
+
+## Technologies Used
+- Spring Boot: Java-based framework for building web applications.
+* H2 Database: In-memory database for storing image metadata.
++ Docker: Used to containerize the application for deployment.
+
+## Technologies Used
+- Spring Boot: Java-based framework for building web applications.
+* H2 Database: In-memory database for storing image metadata.
++ Docker: Used to containerize the application for deployment.
+
+
+
+
 
